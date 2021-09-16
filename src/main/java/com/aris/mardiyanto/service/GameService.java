@@ -19,20 +19,13 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-//@AllArgsConstructor
-//@PropertySource("classpath:application.properties")
 public class GameService {
     @Value("${boardsize}")
     private Integer boardSize;
 
     public Game createGame(Player player) {
         int nSize = (null!=boardSize&&boardSize>0)?boardSize:3;
-        /*try {
-            nSize = Integer.parseInt(boardSize);
-        } catch (NumberFormatException nfe) {
-        }*/
         Game game = new Game();
-        //game.setBoard(new int[3][3]);
         game.setBoard(new int[nSize][nSize]);
         game.setGameId(UUID.randomUUID().toString());
         game.setPlayer1(player);
@@ -84,7 +77,7 @@ public class GameService {
             throw new InvalidGameException("wait for your turn");
         }
         game.setCurrentTurn(gamePlay.getType());
-        //gamePlay.getType();
+        
         int[][] board = game.getBoard();
         board[gamePlay.getCoordinateX()][gamePlay.getCoordinateY()] = gamePlay.getType().getValue();
 
